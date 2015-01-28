@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Android U2F Demo</string>
+    <string name="header">Yubico U2F Demo Service</string>
+    <string name="action_settings">Settings</string>
+    <string name="sign">Login</string>
+    <string name="restart">Start over</string>
+    <string name="nfc_disabled">NFC is disabled</string>
+    <string name="no_nfc">No NFC present in this device</string>
+    <string name="swipe">Swipe your U2F device now.</string>
+    <string name="com_failed">Communication failed, not a U2F device?</string>
+    <string name="sign_failed">SIGN command failed</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="fill_out">Fill the username and password fields.</string>
+    <string name="wrong_creds">Incorrect username or password.</string>
+    <string name="result">Result</string>
+    <string name="enroll">Register</string>
+    <string name="invalid_state">Invalid State</string>
+    <string name="invalid_version">Unsupported U2F version</string>
+    <string name="wait">Authenticating, please wait…</string>
+    <string name="verifying">Verifying…</string>
+    <string name="success">You are now logged in!</string>
+    <string name="failure">Authentication was rejected.</string>
+    <string name="tech_details">Technical Details</string>
+    <string name="details">Details</string>
+
+</resources>
