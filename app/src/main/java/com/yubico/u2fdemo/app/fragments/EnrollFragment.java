@@ -46,7 +46,7 @@ public class EnrollFragment extends Fragment implements MainActivity.OnNFCListen
         this.username = username;
         this.password = password;
         this.details = details;
-        this.details.put("Login Data", "--header--");
+        this.details.put("Registration Data", "--header--");
         this.details.put("username", username);
         this.details.put("password", password);
     }
@@ -127,14 +127,6 @@ public class EnrollFragment extends Fragment implements MainActivity.OnNFCListen
         } else {
             Toast.makeText(getActivity(), R.string.nfc_disabled, Toast.LENGTH_LONG).show();
         }
-    }
-
-    private void handleResultV2(JSONObject data) throws JSONException {
-        byte touch = (byte) data.getString("touch").charAt(0);
-        int counter = data.getInt("counter");
-        details.put("Authentication Parameters", "--header--");
-        details.put("counter", counter + "");
-        details.put("touch", "0x" + new String(Hex.encodeHex(new byte[]{touch})));
     }
 
     private void runOnUiThread(Runnable runnable) {

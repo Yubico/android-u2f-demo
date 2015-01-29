@@ -42,30 +42,14 @@ public class LoginFragment extends Fragment implements TextView.OnEditorActionLi
         view.findViewById(R.id.enroll_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText userText = (EditText) getActivity().findViewById(R.id.username);
-                String username = userText.getText().toString().trim();
-                EditText passText = (EditText) getActivity().findViewById(R.id.password);
-                String password = passText.getText().toString().trim();
-
-                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(getActivity().getCurrentFocus() != null) {
-                    inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getApplicationWindowToken(), 0);
-                }
-
-                if(username.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(getActivity(), R.string.fill_out, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                Log.d("login-fragment", "user/pass: " + username + "/" + password);
-                listener.onLoginEntered(username, password, false);
+                submit(false);
             }
         });
 
         return view;
     }
 
-    private void submit() {
+    private void submit(boolean sign) {
         EditText userText = (EditText) getActivity().findViewById(R.id.username);
         String username = userText.getText().toString().trim();
         EditText passText = (EditText) getActivity().findViewById(R.id.password);
@@ -81,14 +65,17 @@ public class LoginFragment extends Fragment implements TextView.OnEditorActionLi
             return;
         }
 
+        userText.getText().clear();
+        passText.getText().clear();
+
         Log.d("login-fragment", "user/pass: " + username + "/" + password);
-        listener.onLoginEntered(username, password, true);
+        listener.onLoginEntered(username, password, sign);
     }
 
     @Override
     public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_GO && listener != null) {
-            submit();
+            submit(true);
             return true;
         }
 
@@ -97,7 +84,7 @@ public class LoginFragment extends Fragment implements TextView.OnEditorActionLi
 
     @Override
     public void onClick(View v) {
-        submit();
+        submit(true);
     }
 
     @Override

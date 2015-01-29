@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.tech.IsoDep;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,23 +129,7 @@ public class SignFragment extends Fragment implements MainActivity.OnNFCListener
         }
     }
 
-    private String prepareResponseV0(byte[] response) throws JSONException {
-        int len = response.length;
-        byte touch = response[0];
-        String enc = Base64.encodeToString(response, 1, len - 3, Base64.URL_SAFE);
-        details.put("Response Data", "--header--");
-        details.put("enc", enc);
-        details.put("touch ", touch + "");
-        Log.d("challenge-fragment", "touch: " + touch + ", enc: " + enc);
-
-        JSONObject data = new JSONObject();
-        data.put("enc", enc);
-        data.put("touch", touch);
-
-        return data.toString();
-    }
-
-    private void handleResultV2(JSONObject data) throws JSONException {
+    private void handleResult(JSONObject data) throws JSONException {
         byte touch = (byte) data.getString("touch").charAt(0);
         int counter = data.getInt("counter");
         details.put("Authentication Parameters", "--header--");
@@ -188,7 +171,7 @@ public class SignFragment extends Fragment implements MainActivity.OnNFCListener
                             public void run() {
                                 try {
                                     JSONObject data = (JSONObject) new JSONTokener(response).nextValue();
-                                    handleResultV2(data);
+                                    handleResult(data);
                                     ((TextView) getView().findViewById(R.id.status_text)).setText(R.string.success);
                                     getView().findViewById(R.id.details).setVisibility(View.VISIBLE);
                                 } catch (JSONException e) {
