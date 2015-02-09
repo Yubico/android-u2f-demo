@@ -16,7 +16,8 @@ import java.nio.charset.Charset;
  * Created by dain on 2/28/14.
  */
 public class U2F_V2 {
-    private static final byte[] SELECT_COMMAND = {0x00, (byte) 0xa4, 0x04, 0x00, 0x07, (byte) 0xa0, 0x00, 0x00, 0x05, 0x27, 0x10, 0x02};
+    private static final byte[] SELECT_COMMAND = {0x00, (byte) 0xa4, 0x04, 0x00, 0x07, (byte)0xa0, 0x00, 0x00, 0x06, 0x47, 0x2f, 0x00, 0x01};
+    private static final byte[] SELECT_COMMAND_YUBICO = {0x00, (byte) 0xa4, 0x04, 0x00, 0x07, (byte) 0xa0, 0x00, 0x00, 0x05, 0x27, 0x10, 0x02};
     private static final byte[] GET_RESPONSE_COMMAND = {0x00, (byte) 0xc0, 0x00, 0x00, (byte) 0xff};
     private static final byte[] GET_VERSION_COMMAND = {0x00, (byte) 0x03, 0x00, 0x00, (byte) 0xff};
 
@@ -26,7 +27,15 @@ public class U2F_V2 {
         this.tag = tag;
         tag.setTimeout(5000);
         tag.connect();
-        send(SELECT_COMMAND);
+        try {
+            send(SELECT_COMMAND);
+        } catch (APDUError e) {
+            if(e.getCode() == 0x6a82) {
+                send(SELECT_COMMAND_YUBICO);
+            } else {
+                throw e;
+            }
+        }
     }
 
     public String getVersion() throws IOException, APDUError {
