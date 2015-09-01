@@ -1,0 +1,10 @@
+== Yubico Android U2F Demo
+This is a demo app for Android which uses an NFC enabled U2F device to register
+and authenticate to the https://demo.yubico.com/u2f demo service.
+
+=== Building
+This project uses the Gradle build system. You can build a working APK by running:
+
+$ ./gradlew assemble
+
+The resuling APK will be in the app/build/outputs/apk/ directory.
